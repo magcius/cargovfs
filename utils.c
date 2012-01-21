@@ -27,6 +27,25 @@
 #endif
 
 char *
+cargo_util_get_unpacked_directory (char *vfs_filename)
+{
+  char *directory, *p;
+  size_t vfs_len;
+
+  vfs_len = strlen (vfs_filename);
+
+  directory = malloc (vfs_len + strlen ("_unpacked") + 1);
+  strcpy (directory, vfs_filename);
+
+  for (p = directory; *p; p ++)
+    if (*p == '.') *p = '_';
+
+  strcpy (directory + vfs_len, "_unpacked\0");
+
+  return directory;
+}
+
+char *
 cargo_util_build_path (char *s1, char *s2)
 {
   char *destination;

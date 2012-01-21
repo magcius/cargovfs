@@ -132,24 +132,30 @@ int
 main (int argc, char **argv)
 {
   CargoVFSDirectoryEntry *toplevel;
+  char *directory;
   FILE *out;
 
-  if (argc != 3)
+  if (argc < 2)
     {
-      fprintf (stderr, "Usage: %s directory out\n", argv[0]);
+      fprintf (stderr, "Usage: %s out.vfs [directory]\n", argv[0]);
       return 1;
     }
 
-  toplevel = construct_from_dir (argv[1], 1);
+  if (argc == 2)
+    directory = cargo_util_get_unpacked_directory (argv[1]);
+  else
+    directory = argv[2];
 
-  out = fopen(argv[2], "wb");
+  toplevel = construct_from_dir (directory, 1);
+
+  out = fopen(argv[1], "wb");
 
   /* XXX: a bit hacky
    * we write the headers twice -- once to just
    * calculate the sizes of everything so we know
    * the offsets, and another time for real */
   cargo_vfs_write_vfs_file (toplevel, out);
-  write_files (toplevel, argv[1], out);
+  write_files (toplevel, directory, out);
   fseek (out, 0, SEEK_SET);
   cargo_vfs_write_vfs_file (toplevel, out);
   fclose (out);

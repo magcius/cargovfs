@@ -22,6 +22,7 @@
 
 int cargo_util_ensure_directory_exists (char *directory);
 char * cargo_util_build_path (char *s1, char *s2);
+char * cargo_util_get_unpacked_directory (char *vfs_filename);
 
 #endif /* __CARGO_VFS_UTILS_H__ */
 

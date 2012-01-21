@@ -24,25 +24,6 @@
 #include "vfs.h"
 #include "utils.h"
 
-static char *
-get_destination_directory (char *vfs_filename)
-{
-  char *directory, *p;
-  size_t vfs_len;
-
-  vfs_len = strlen (vfs_filename);
-
-  directory = malloc (vfs_len + strlen ("_unpacked") + 1);
-  strcpy (directory, vfs_filename);
-
-  for (p = directory; *p; p ++)
-    if (*p == '.') *p = '_';
-
-  strcpy (directory + vfs_len, "_unpacked\0");
-
-  return directory;
-}
-
 int
 main (int argc, char **argv)
 {
@@ -70,7 +51,7 @@ main (int argc, char **argv)
 
   if (argc == 2)
     {
-      destination = get_destination_directory (filename);
+      destination = cargo_util_get_unpacked_directory (filename);
       cargo_vfs_directory_entry_extract (toplevel, destination, in);
     }
   else
