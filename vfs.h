@@ -60,6 +60,8 @@ struct _CargoVFSDirectoryEntry
   CargoVFSDirectoryEntry *next;
 };
 
+typedef void (*CargoVFSFileExtractedCallback) (CargoVFSFileEntry *file);
+
 CargoVFSDirectoryEntry * cargo_vfs_directory_entry_new (void);
 
 CargoVFSDirectoryEntry * cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
@@ -68,9 +70,10 @@ CargoVFSDirectoryEntry * cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry 
 void cargo_vfs_directory_entry_write (CargoVFSDirectoryEntry *entry,
                                       FILE                   *out);
 
-void cargo_vfs_directory_entry_extract (CargoVFSDirectoryEntry *entry,
-                                        char                   *parent,
-                                        FILE                   *in);
+void cargo_vfs_directory_entry_extract (CargoVFSDirectoryEntry        *entry,
+                                        char                          *parent,
+                                        FILE                          *in,
+                                        CargoVFSFileExtractedCallback  callback);
 char * cargo_vfs_directory_entry_path (CargoVFSDirectoryEntry *entry);
 
 CargoVFSFileEntry * cargo_vfs_directory_entry_get_file (CargoVFSDirectoryEntry *entry,
@@ -81,7 +84,6 @@ void cargo_vfs_directory_entry_append_subdir (CargoVFSDirectoryEntry *entry,
                                               CargoVFSDirectoryEntry *subdir);
 void cargo_vfs_directory_entry_append_file (CargoVFSDirectoryEntry *entry,
                                             CargoVFSFileEntry      *file);
-
 
 CargoVFSDirectoryEntry * cargo_vfs_read_vfs_file  (FILE *in);
 void cargo_vfs_write_vfs_file (CargoVFSDirectoryEntry *toplevel,

@@ -194,9 +194,10 @@ cargo_vfs_directory_entry_write (CargoVFSDirectoryEntry *entry,
 }
 
 void
-cargo_vfs_directory_entry_extract (CargoVFSDirectoryEntry *entry,
-                                   char                   *parent,
-                                   FILE                   *in)
+cargo_vfs_directory_entry_extract (CargoVFSDirectoryEntry        *entry,
+                                   char                          *parent,
+                                   FILE                          *in,
+				   CargoVFSFileExtractedCallback  callback)
 {
   CargoVFSFileEntry *file;
   CargoVFSDirectoryEntry *subdir;
@@ -208,10 +209,14 @@ cargo_vfs_directory_entry_extract (CargoVFSDirectoryEntry *entry,
     return;
 
   for (file = entry->files; file != NULL; file = file->next)
-    cargo_vfs_file_entry_extract (file, path, in);
+    {
+      cargo_vfs_file_entry_extract (file, path, in);
+      if (callback != NULL)
+        callback (file);
+    }
 
   for (subdir = entry->subdirs; subdir != NULL; subdir = subdir->next)
-    cargo_vfs_directory_entry_extract (subdir, path, in);
+    cargo_vfs_directory_entry_extract (subdir, path, in, callback);
 
   free (path);
 }

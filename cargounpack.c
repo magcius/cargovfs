@@ -24,6 +24,15 @@
 #include "vfs.h"
 #include "utils.h"
 
+static void
+file_extracted_callback (CargoVFSFileEntry *file)
+{
+  char *path;
+  path = cargo_vfs_file_entry_path (file);
+  printf ("Unpacked '%s'...\n", path);
+  free (path);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -52,7 +61,7 @@ main (int argc, char **argv)
   if (argc == 2)
     {
       destination = cargo_util_get_unpacked_directory (filename);
-      cargo_vfs_directory_entry_extract (toplevel, destination, in);
+      cargo_vfs_directory_entry_extract (toplevel, destination, in, file_extracted_callback);
     }
   else
     {
