@@ -1,0 +1,7 @@
+*.o
+*~
+*_extracted
+*.vfs
+cargolist
+cargopack
+cargounpack
