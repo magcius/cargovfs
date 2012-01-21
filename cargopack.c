@@ -147,6 +147,8 @@ main (int argc, char **argv)
     directory = argv[2];
 
   toplevel = construct_from_dir (directory, 1);
+  if (toplevel == NULL)
+    return 1;
 
   out = fopen(argv[1], "wb");
 
