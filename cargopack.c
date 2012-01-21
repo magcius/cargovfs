@@ -107,6 +107,8 @@ write_file (CargoVFSFileEntry *entry,
   fread (buf, i, 1, in);
   fwrite (buf, i, 1, out);
 
+  printf ("Packed '%s'...\n", path);
+
   fclose (in);
   free (path);
 }
