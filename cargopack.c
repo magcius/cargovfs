@@ -39,7 +39,7 @@ construct_from_dir (char *directory,
   char *childpath;
 
   entry = cargo_vfs_directory_entry_new ();
-  entry->name = is_toplevel ? NULL : basename (directory);
+  entry->name = is_toplevel ? NULL : strdup (basename (directory));
 
   dirp = opendir (directory);
   if (dirp == NULL)
