@@ -139,7 +139,7 @@ cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
   currfile = &entry->files;
   for (i = 0; i < entry->file_count; i ++)
     {
-      *currfile = cargo_vfs_file_entry_read (parent, in);
+      *currfile = cargo_vfs_file_entry_read (entry, in);
       currfile = &((*currfile)->next);
     }
 
@@ -147,7 +147,7 @@ cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
   for (i = 0; i < entry->subdir_count; i ++)
     {
       /* all subdirs have names -- only toplevel doesn't */
-      *currdir = cargo_vfs_directory_entry_read (parent, in, 1);
+      *currdir = cargo_vfs_directory_entry_read (entry, in, 1);
       currdir = &((*currdir)->next);
     }
 
