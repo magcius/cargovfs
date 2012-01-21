@@ -32,13 +32,13 @@ get_destination_directory (char *vfs_filename)
 
   vfs_len = strlen (vfs_filename);
 
-  directory = malloc (vfs_len + strlen ("_extracted") + 1);
+  directory = malloc (vfs_len + strlen ("_unpacked") + 1);
   strcpy (directory, vfs_filename);
 
   for (p = directory; *p; p ++)
     if (*p == '.') *p = '_';
 
-  strcpy (directory + vfs_len, "_extracted\0");
+  strcpy (directory + vfs_len, "_unpacked\0");
 
   return directory;
 }
