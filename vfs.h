@@ -20,6 +20,7 @@
 #ifndef __CARGO_VFS_VFS_H__
 #define __CARGO_VFS_VFS_H__
 
+#include <stdio.h>
 #include <stdint.h>
 
 #define CARGO_VFS_FILE_MAGIC "LP3C"
