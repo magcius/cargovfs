@@ -22,6 +22,10 @@
 #include <malloc.h>
 #include <sys/stat.h>
 
+#ifdef WIN32
+#include <direct.h>
+#endif
+
 char *
 cargo_util_build_path (char *s1, char *s2)
 {
@@ -50,7 +54,11 @@ cargo_util_build_path (char *s1, char *s2)
 int
 cargo_util_ensure_directory_exists (char *directory)
 {
+#ifdef WIN32
+  if (_mkdir (directory) == -1)
+#else
   if (mkdir (directory, 0775) == -1)
+#endif
     {
       if (errno != EEXIST)
         {
