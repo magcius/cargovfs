@@ -54,12 +54,21 @@ read_name (FILE *in)
 }
 
 CargoVFSFileEntry *
+cargo_vfs_file_entry_new (void)
+{
+  CargoVFSFileEntry *entry;
+  entry = malloc (sizeof (CargoVFSFileEntry));
+  memset (entry, 0, sizeof (CargoVFSFileEntry));
+  return entry;
+}
+
+CargoVFSFileEntry *
 cargo_vfs_file_entry_read (CargoVFSDirectoryEntry *parent,
                            FILE                   *in)
 {
   CargoVFSFileEntry *entry;
 
-  entry = malloc (sizeof (CargoVFSFileEntry));
+  entry = cargo_vfs_file_entry_new ();
   entry->parent = parent;
   entry->name = read_name (in);
 
@@ -119,6 +128,14 @@ cargo_vfs_file_entry_path (CargoVFSFileEntry *entry)
 }
 
 
+CargoVFSDirectoryEntry *
+cargo_vfs_directory_entry_new (void)
+{
+  CargoVFSDirectoryEntry *entry;
+  entry = malloc (sizeof (CargoVFSDirectoryEntry));
+  memset (entry, 0, sizeof (CargoVFSDirectoryEntry));
+  return entry;
+}
 
 CargoVFSDirectoryEntry *
 cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
@@ -130,7 +147,7 @@ cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
   CargoVFSDirectoryEntry **currdir;
   int32_t i;
 
-  entry = malloc (sizeof (CargoVFSDirectoryEntry));
+  entry = cargo_vfs_directory_entry_new ();
   entry->parent = parent;
   entry->name = has_name ? read_name (in) : NULL;
   fread (&entry->subdir_count, 4, 1, in);

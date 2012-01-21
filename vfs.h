@@ -38,6 +38,8 @@ struct _CargoVFSFileEntry
   CargoVFSFileEntry *next;
 };
 
+CargoVFSFileEntry * cargo_vfs_file_entry_new (void);
+
 CargoVFSFileEntry * cargo_vfs_file_entry_read (CargoVFSDirectoryEntry *parent,
                                                FILE                   *in);
 void cargo_vfs_file_entry_write   (CargoVFSFileEntry *entry,
@@ -57,6 +59,8 @@ struct _CargoVFSDirectoryEntry
   CargoVFSDirectoryEntry *subdirs;
   CargoVFSDirectoryEntry *next;
 };
+
+CargoVFSDirectoryEntry * cargo_vfs_directory_entry_new (void);
 
 CargoVFSDirectoryEntry * cargo_vfs_directory_entry_read (CargoVFSDirectoryEntry *parent,
                                                          FILE                   *in,

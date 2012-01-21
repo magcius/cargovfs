@@ -38,8 +38,7 @@ construct_from_dir (char *directory,
   struct stat statbuf;
   char *childpath;
 
-  entry = malloc (sizeof (CargoVFSDirectoryEntry));
-  entry->subdirs = NULL; entry->files = NULL;
+  entry = cargo_vfs_directory_entry_new ();
   entry->name = is_toplevel ? NULL : basename (directory);
 
   dirp = opendir (directory);
@@ -67,7 +66,7 @@ construct_from_dir (char *directory,
       else
         {
           CargoVFSFileEntry *file;
-          file = malloc (sizeof (CargoVFSFileEntry));
+          file = cargo_vfs_file_entry_new ();
           file->name = strdup (dp->d_name);
           file->unknown_1 = 0;
           cargo_vfs_directory_entry_append_file (entry, file);
